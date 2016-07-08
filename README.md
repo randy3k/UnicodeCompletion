@@ -6,7 +6,7 @@ work for me and [UnicodeMath](https://github.com/mvoidex/UnicodeMath)
 keymapping is different from Julia (e.g., `\epsilon` and `\varepsilon`), so I
 created this package.
 The list of unicodes is generated from
-[Julia](https://github.com/JuliaLang/julia/), see[latex_symbols.jl](latex_symbols.jl) and [emoji_symbols.jl](emoji_symbols.jl). 
+[Julia](https://github.com/JuliaLang/julia/), see [latex_symbols.jl](latex_symbols.jl) and [emoji_symbols.jl](emoji_symbols.jl). 
 
 Check [Julia Docs](http://docs.julialang.org/en/latest/manual/unicode-input/) for the complete list of supported Unicode.
 
