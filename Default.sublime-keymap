@@ -1,0 +1,41 @@
+[
+    {
+        "keys": ["tab"], "command": "julia_unicode_insert_best_completion", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" },
+            { "key": "setting.tab_completion", "operator": "equal", "operand": true },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "julia_unicode_can_complete"}
+        ]
+    },
+
+    {
+        "keys": ["tab"], "command": "auto_complete", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" },
+            { "key": "setting.tab_completion", "operator": "equal", "operand": true },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "julia_unicode_is_completed"}
+        ]
+    },
+
+    {
+        "keys": ["tab"], "command": "julia_unicode_commit_complete", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" },
+            { "key": "auto_complete_visible" },
+            { "key": "setting.auto_complete_commit_on_tab" },
+            { "key": "julia_unicode_can_complete"}
+        ]
+    },
+
+    {
+        "keys": ["enter"], "command": "julia_unicode_commit_complete", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" },
+            { "key": "auto_complete_visible" },
+            { "key": "setting.auto_complete_commit_on_tab", "operand": false },
+            { "key": "julia_unicode_can_complete"}
+        ]
+    }
+]
