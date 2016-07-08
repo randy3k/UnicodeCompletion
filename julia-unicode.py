@@ -86,7 +86,6 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
 
 class JuliaUnicodeShowAutoComplete(sublime_plugin.TextCommand):
     def run(self, edit):
-        print("show")
         view = self.view
         pt = view.sel()[0].end()
         view.insert(edit, pt, "^")
