@@ -1,3 +1,8 @@
+### Important
+
+I just discovered [UnicodeMath](https://github.com/mvoidex/UnicodeMath) which is much better, there is no reason to maintain and support this anymore.
+
+
 ### Julia UTF-8
 
 This is a simple package to insert Unicode characters to Julia as in Julia REPL.
