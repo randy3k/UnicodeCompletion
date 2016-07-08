@@ -8,6 +8,8 @@ created this package.
 The list of unicodes is copied from
 [Julia](https://github.com/JuliaLang/julia/), check [latex_symbols.jl](latex_symbols.jl) and [emoji_symbols.jl](emoji_symbols.jl). 
 
+Check [Julia Docs](http://docs.julialang.org/en/latest/manual/unicode-input/) for the complete list of supported Unicode.
+
 #### Insert LaTeX symbol:
 
 Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Sublime Text. Similar to other latex symbols.
@@ -16,11 +18,6 @@ Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Subl
 
 #### Insert Emoji 🍰:
 
-It is known that there is a bug in handling emoji. For example, when you hit
-enter while trying to insert `🍰` via `\:cake:`, the text `\:` is not replaced.
-It could probably be fixed by defining custom `commit_completion` command. A
-workaround for now is to type the full text `\:cake:` and then trigger
-`auto_complete` (<kbd>ctrl+space</kbd> for Mac and Windows, <kbd>alt+/</kbd>
-for Linux).
+Type `\:cake:` and hit enter/tab to insert the corresponding unicode `🍰` to Sublime Text.
 
 <img width="400px", src="emoji.png"/>
