@@ -4,7 +4,7 @@ import re
 from .latex_symbols import latex_symbols
 from .emoji_symbols import emoji_symbols
 
-CONTAINS_COMPLETIONS = re.compile(r".*(\\[:_0-9a-zA-Z-^]*)$")
+CONTAINS_COMPLETIONS = re.compile(r".*(\\[:_0-9a-zA-Z+-^]*)$")
 symbols = latex_symbols + emoji_symbols
 
 def get_command(view):
@@ -82,16 +82,6 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("commit_completion")
-        pt = view.sel()[0].begin()
-        if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
-            view.replace(edit, sublime.Region(pt-3,pt-1), "")
-
-class JuliaUnicodeShowAutoComplete(sublime_plugin.TextCommand):
-    def run(self, edit):
-        view = self.view
-        pt = view.sel()[0].end()
-        view.insert(edit, pt, "^")
-        view.run_command("auto_complete")
         pt = view.sel()[0].begin()
         if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
             view.replace(edit, sublime.Region(pt-3,pt-1), "")

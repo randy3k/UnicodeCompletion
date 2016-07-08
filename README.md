@@ -18,6 +18,10 @@ Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Subl
 
 #### Insert Emoji 🍰:
 
-Type `\:cake:` and hit enter/tab to insert the corresponding unicode `🍰` to Sublime Text.
+Type `\:cake:` and hit enter/tab to insert the corresponding unicode 🍰 to Sublime Text.
 
 <img width="400px", src="emoji.png"/>
+
+#### Known issues
+
+It is known that Sublime Text autocompletion pop up window does not show 👍 (`\:+1:`) and powers (e.g., `\^2`), to insert them, they have to be exactly typed and followed by a <kbd>tab</kbd>.
