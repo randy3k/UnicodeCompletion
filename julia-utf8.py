@@ -2460,7 +2460,6 @@ class LatexPlusAutoCompletions(sublime_plugin.EventListener):
     def on_query_completions(self, view, prefix, locations):
         if not view.match_selector(locations[0], "source.julia"):
             return None
-        # use default completion for non latex command
         ploc = locations[0]-len(prefix)
         if prefix and view.substr(sublime.Region(ploc-1, ploc)) != "\\":
             return None
