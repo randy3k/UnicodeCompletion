@@ -19,15 +19,17 @@ def get_command(view):
 
 def julia_unicode_can_complete(view, exact=True):
     c = get_command(view)
-    if c:
-        for s in symbols:
-            if exact:
-                if c == s[0]:
-                    return True
-            else:
-                if c in s[0]:
-                    return True
+    if not c:
+        return False
+    if not exact:
+        return True
+
+    for s in symbols:
+        if c == s[0]:
+            return True
+
     return False
+
 
 class JuliaUnicodeListener(sublime_plugin.EventListener):
 
