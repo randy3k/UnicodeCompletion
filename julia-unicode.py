@@ -83,3 +83,14 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
         pt = view.sel()[0].begin()
         if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
             view.replace(edit, sublime.Region(pt-3,pt-1), "")
+
+class JuliaUnicodeShowAutoComplete(sublime_plugin.TextCommand):
+    def run(self, edit):
+        print("show")
+        view = self.view
+        pt = view.sel()[0].end()
+        view.insert(edit, pt, "^")
+        view.run_command("auto_complete")
+        pt = view.sel()[0].begin()
+        if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
+            view.replace(edit, sublime.Region(pt-3,pt-1), "")

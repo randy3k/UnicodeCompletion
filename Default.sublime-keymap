@@ -37,5 +37,15 @@
             { "key": "setting.auto_complete_commit_on_tab", "operand": false },
             { "key": "julia_unicode_can_complete"}
         ]
+    },
+
+    {
+        "keys": ["^"], "command": "julia_unicode_show_auto_complete", "context":
+        [
+            { "key": "selector", "operator": "equal", "operand": "source.julia" },
+            { "key": "preceding_text", "match_all": true, "operand": "\\\\$", "operator": "regex_contains"},
+            { "key": "auto_complete_visible", "operand": false },
+            { "key": "julia_unicode_can_complete"}
+        ]
     }
 ]
