@@ -102,30 +102,31 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
         if sel.empty():
             pt = sel.end()
             chars = view.substr(sublime.Region(pt, pt+1))
-            if chars and is_ascii(chars):
+            if not chars or is_ascii(chars):
                 chars = view.substr(sublime.Region(pt-1, pt))
-                if chars and is_ascii(chars):
+                if not chars or is_ascii(chars):
                     chars = ""
         else:
             chars = view.substr(sel)
         view.window().show_input_panel("Unicode: ", chars, self.callback, None, None)
 
-    def get_string(self, chars):
+    def get_strings(self, chars):
+        ret = []
         for s in symbols:
             if chars == s[1]:
-                return s[0]
-        return None
+                ret.append(s[0])
+        return ret
 
     def callback(self, chars):
         results = []
         for char in chars:
             if not is_ascii(char):
-                s = self.get_string(char)
-                if s:
-                    results = results + [(char, s)]
+                strs = self.get_strings(char)
+                if len(strs) > 0:
+                    results = results + [(char, s) for s in strs]
 
         def copycallback(action):
-            if action == 0:
+            if action >= 0:
                 sublime.set_clipboard(results[action][1])
 
         display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
