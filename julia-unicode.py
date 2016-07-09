@@ -4,8 +4,10 @@ import re
 from .latex_symbols import latex_symbols
 from .emoji_symbols import emoji_symbols
 
+
 CONTAINS_COMPLETIONS = re.compile(r".*(\\[:_0-9a-zA-Z+-^]*)$")
 symbols = latex_symbols + emoji_symbols
+
 
 def get_command(view):
     sel = view.sel()[0]
@@ -16,6 +18,7 @@ def get_command(view):
         return m.group(1)
     else:
         return None
+
 
 def julia_unicode_can_complete(view, exact=True):
     c = get_command(view)
@@ -53,7 +56,7 @@ class JuliaUnicodeListener(sublime_plugin.EventListener):
             return None
         if not prefix:
             return None
-        return [(s[0] + "\t" + s[1], prefix, s[1] ) for s in symbols if prefix in s[0]]
+        return [(s[0] + "\t" + s[1], prefix, s[1]) for s in symbols if prefix in s[0]]
 
     def on_query_context(self, view, key, operator, operand, match_all):
         if view.settings().get('is_widget'):
@@ -75,13 +78,14 @@ class JuliaUnicodeInsertBestCompletion(sublime_plugin.TextCommand):
         view = self.view
         view.run_command("insert_best_completion",  {"default": "\t", "exact": False})
         pt = view.sel()[0].begin()
-        if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
-            view.replace(edit, sublime.Region(pt-3,pt-1), "")
+        if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
+            view.replace(edit, sublime.Region(pt-3, pt-1), "")
+
 
 class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("commit_completion")
         pt = view.sel()[0].begin()
-        if view.substr(sublime.Region(pt-3,pt-1)) == "\\:":
-            view.replace(edit, sublime.Region(pt-3,pt-1), "")
+        if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
+            view.replace(edit, sublime.Region(pt-3, pt-1), "")
