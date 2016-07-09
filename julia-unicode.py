@@ -34,12 +34,22 @@ def julia_unicode_can_complete(view, exact=True):
     return False
 
 
+def julia_unicode_can_run(view):
+    point = view.sel()[0].end() if view.sel() else 0
+    is_julia = view.match_selector(point, "source.julia")
+    return is_julia or view.settings().get("julia_unicode", False)
+
+
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)
+
+
 class JuliaUnicodeListener(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
         if view.settings().get('is_widget'):
             return
-        if not view.match_selector(locations[0], "source.julia"):
+        if not julia_unicode_can_run(view):
             return None
 
         ploc = locations[0]-len(prefix)
@@ -61,14 +71,12 @@ class JuliaUnicodeListener(sublime_plugin.EventListener):
     def on_query_context(self, view, key, operator, operand, match_all):
         if view.settings().get('is_widget'):
             return
-        point = view.sel()[0].end() if view.sel() else 0
-        if not view.match_selector(point, "source.julia"):
-            return None
-
         if key == 'julia_unicode_is_completed':
             return julia_unicode_can_complete(view, True) == operand
         elif key == 'julia_unicode_can_complete':
             return julia_unicode_can_complete(view, False) == operand
+        elif key == 'julia_unicode_can_run':
+            return julia_unicode_can_run(view)
 
         return None
 
@@ -89,10 +97,6 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
         pt = view.sel()[0].begin()
         if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
             view.replace(edit, sublime.Region(pt-3, pt-1), "")
-
-
-def is_ascii(s):
-    return all(ord(c) < 128 for c in s)
 
 
 class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
@@ -132,3 +136,11 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
         display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
 
         self.view.window().show_quick_panel(display, copycallback)
+
+
+class ToggleJuliaUnicode(sublime_plugin.WindowCommand):
+    def run(self):
+        view = self.window.active_view()
+        view.settings().set("julia_unicode", not view.settings().get("julia_unicode", False))
+        onoff = "on" if view.settings().get("julia_unicode") else "off"
+        sublime.status_message("Julia-Unicode %s" % onoff)
