@@ -1,0 +1,6 @@
+[
+  {
+    "caption": "Julia-Unicode: Unicode Reverse Lookup", 
+    "command": "julia_unicode_reverse_lookup"
+  }
+]

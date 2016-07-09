@@ -89,3 +89,41 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
         pt = view.sel()[0].begin()
         if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
             view.replace(edit, sublime.Region(pt-3, pt-1), "")
+
+
+def is_ascii(s):
+    return all(ord(c) < 128 for c in s)
+
+
+class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
+    def run(self, edit):
+        view = self.view
+        sel = view.sel()[0]
+        if sel.empty():
+            pt = sel.end()
+            char = view.substr(sublime.Region(pt, pt+1))
+            if char and is_ascii(char):
+                char = view.substr(sublime.Region(pt-1, pt))
+                if char and is_ascii(char):
+                    char = ""
+        else:
+            char = view.substr(sel)
+        view.window().show_input_panel("Unicode: ", char, self.callback, None, None)
+
+    def get_string(self, char):
+        for s in symbols:
+            if char == s[1]:
+                return s[0]
+        return None
+
+    def callback(self, char):
+        s = self.get_string(char)
+        if not s:
+            sublime.message_dialog("%s not found." % char)
+            return
+
+        def copycallback(action):
+            if action == 0:
+                sublime.set_clipboard(s)
+
+        self.view.window().show_quick_panel([["%s: %s" % (char, s), "Copy to Clipboard"]], copycallback)

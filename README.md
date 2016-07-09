@@ -10,6 +10,8 @@ The list of unicodes is generated from
 
 Check [Julia Docs](http://docs.julialang.org/en/latest/manual/unicode-input/) for the complete list of supported Unicode.
 
+It also provides a command `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the corresponding input of the unicode under the cursor.
+
 #### Insert LaTeX symbol:
 
 Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Sublime Text. Similar to other latex symbols.
