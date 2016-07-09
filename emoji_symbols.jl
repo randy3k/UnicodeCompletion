@@ -1,13 +1,13 @@
 include(joinpath(JULIA_HOME, "..", "share", "julia", "base", "emoji_symbols.jl"));
 
-f = open("emoji_symbols.py", "w")
+📁 = open("emoji_symbols.py", "w")
 
-println(f, "emoji_symbols = [")
-for (i, (α, β)) in enumerate(emoji_symbols)
-    print(f, "(\"", escape_string(α), "\", \"",  β, "\")")
-    i < length(emoji_symbols) && print(f, ",")
-    println(f, "")
+println(📁, "emoji_symbols = [")
+for (📞, (🔑, 🍺)) in enumerate(emoji_symbols)
+    print(📁, "(\"", escape_string(🔑), "\", \"",  🍺, "\")")
+    📞 < length(emoji_symbols) && print(📁, ",")
+    println(📁, "")
 end
-println(f, "]")
+println(📁, "]")
 
-close(f)
+close(📁)
