@@ -63,11 +63,11 @@ class JuliaUnicodeListener(sublime_plugin.EventListener):
             return None
 
         if key == 'julia_unicode_is_completed':
-            return julia_unicode_can_complete(view, True)
+            return julia_unicode_can_complete(view, True) == operand
         elif key == 'julia_unicode_can_complete':
-            return julia_unicode_can_complete(view, False)
-        else:
-            return False
+            return julia_unicode_can_complete(view, False) == operand
+
+        return None
 
 
 class JuliaUnicodeInsertBestCompletion(sublime_plugin.TextCommand):
