@@ -10,8 +10,6 @@ The list of unicodes is generated from
 
 Check [Julia Docs](http://docs.julialang.org/en/latest/manual/unicode-input/) for the complete list of supported Unicode.
 
-It also provides a command `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the corresponding input of the unicode under the cursor.
-
 #### Insert LaTeX symbol:
 
 Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Sublime Text. Similar to other latex symbols.
@@ -20,10 +18,15 @@ Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Subl
 
 #### Insert Emoji 🍰:
 
-Type `\:cake:` and hit enter/tab to insert the corresponding unicode 🍰 to Sublime Text.
+Type `\:cake:` and hit enter/tab to insert the corresponding unicode 🍰 to Sublime Text. 
+It is known that Sublime Text autocompletion pop up window does not show 👍 (`\:+1:`) and powers (e.g., `\^2`), to insert them, they have to be exactly typed and followed by a <kbd>tab</kbd>.
 
 <img width="400px", src="emoji.png"/>
 
-#### Known issues
+#### Reverse lookup
 
-It is known that Sublime Text autocompletion pop up window does not show 👍 (`\:+1:`) and powers (e.g., `\^2`), to insert them, they have to be exactly typed and followed by a <kbd>tab</kbd>.
+
+It also provides a command `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the corresponding input of the unicodes under the cursor or the selection.
+
+<img width="600px", src="reverse.png"/>
+

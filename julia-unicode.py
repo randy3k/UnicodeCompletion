@@ -101,29 +101,33 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
         sel = view.sel()[0]
         if sel.empty():
             pt = sel.end()
-            char = view.substr(sublime.Region(pt, pt+1))
-            if char and is_ascii(char):
-                char = view.substr(sublime.Region(pt-1, pt))
-                if char and is_ascii(char):
-                    char = ""
+            chars = view.substr(sublime.Region(pt, pt+1))
+            if chars and is_ascii(chars):
+                chars = view.substr(sublime.Region(pt-1, pt))
+                if chars and is_ascii(chars):
+                    chars = ""
         else:
-            char = view.substr(sel)
-        view.window().show_input_panel("Unicode: ", char, self.callback, None, None)
+            chars = view.substr(sel)
+        view.window().show_input_panel("Unicode: ", chars, self.callback, None, None)
 
-    def get_string(self, char):
+    def get_string(self, chars):
         for s in symbols:
-            if char == s[1]:
+            if chars == s[1]:
                 return s[0]
         return None
 
-    def callback(self, char):
-        s = self.get_string(char)
-        if not s:
-            sublime.message_dialog("%s not found." % char)
-            return
+    def callback(self, chars):
+        results = []
+        for char in chars:
+            if not is_ascii(char):
+                s = self.get_string(char)
+                if s:
+                    results = results + [(char, s)]
 
         def copycallback(action):
             if action == 0:
-                sublime.set_clipboard(s)
+                sublime.set_clipboard(results[action][1])
 
-        self.view.window().show_quick_panel([["%s: %s" % (char, s), "Copy to Clipboard"]], copycallback)
+        display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
+
+        self.view.window().show_quick_panel(display, copycallback)
