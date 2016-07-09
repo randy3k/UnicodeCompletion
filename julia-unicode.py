@@ -85,18 +85,20 @@ class JuliaUnicodeInsertBestCompletion(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("insert_best_completion",  {"default": "\t", "exact": False})
-        pt = view.sel()[0].begin()
-        if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
-            view.replace(edit, sublime.Region(pt-3, pt-1), "")
+        for sel in view.sel():
+            pt = sel.begin()
+            if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
+                view.replace(edit, sublime.Region(pt-3, pt-1), "")
 
 
 class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("commit_completion")
-        pt = view.sel()[0].begin()
-        if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
-            view.replace(edit, sublime.Region(pt-3, pt-1), "")
+        for sel in view.sel():
+            pt = sel.begin()
+            if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
+                view.replace(edit, sublime.Region(pt-3, pt-1), "")
 
 
 class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
