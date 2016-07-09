@@ -114,7 +114,8 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
                     chars = ""
         else:
             chars = view.substr(sel)
-        view.window().show_input_panel("Unicode: ", chars, self.callback, None, None)
+
+        self.show_list(chars)
 
     def get_strings(self, chars):
         ret = []
@@ -123,7 +124,7 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
                 ret.append(s[0])
         return ret
 
-    def callback(self, chars):
+    def show_list(self, chars):
         results = []
         for char in chars:
             if not is_ascii(char):
