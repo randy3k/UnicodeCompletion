@@ -1,13 +1,13 @@
 include(joinpath(JULIA_HOME, "..", "share", "julia", "base", "latex_symbols.jl"));
 
-f = open("latex_symbols.py", "w")
+φ = open("latex_symbols.py", "w")
 
-println(f, "latex_symbols = [")
-for (i, (α, β)) in enumerate(latex_symbols)
-    print(f, "(\"", escape_string(α), "\", \"",  β, "\")")
-    i < length(latex_symbols) && print(f, ",")
-    println(f, "")
+println(φ, "latex_symbols = [")
+for (ω, (α, β)) in enumerate(latex_symbols)
+    print(φ, "(\"", escape_string(α), "\", \"",  β, "\")")
+    ω < length(latex_symbols) && print(φ, ",")
+    println(φ, "")
 end
-println(f, "]")
+println(φ, "]")
 
-close(f)
+close(φ)
