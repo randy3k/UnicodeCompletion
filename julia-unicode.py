@@ -108,9 +108,10 @@ class JuliaUnicodeLookup(sublime_plugin.TextCommand):
             if action >= 0:
                 sublime.set_clipboard(symbols[action][1])
 
-        display = [["%s: %s" % (s[1], s[0]), "Copy to Clipboard"] for s in symbols]
+        latex_dplay = [["%s: %s" % (s[1], s[0]), "Copy LaTeX to Clipboard"] for s in latex_symbols]
+        emoji_dplay = [["%s: %s" % (s[1], s[0]), "Copy Emoji to Clipboard"] for s in emoji_symbols]
 
-        self.view.window().show_quick_panel(display, copycallback)
+        self.view.window().show_quick_panel(latex_dplay + emoji_dplay, copycallback)
 
 
 class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
@@ -157,7 +158,7 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
                 sublime.set_clipboard(results[action][1])
 
         if results:
-            display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
+            display = [["%s: %s" % r, "Copy Input to Clipboard"] for r in results]
             self.view.window().show_quick_panel(display, copycallback)
         else:
             sublime.message_dialog("No matching is found.")
