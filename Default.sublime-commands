@@ -1,10 +1,14 @@
 [
-  {
+    {
+      "caption": "Julia-Unicode: Unicode Lookup", 
+      "command": "julia_unicode_lookup"
+    },
+    {
     "caption": "Julia-Unicode: Unicode Reverse Lookup", 
     "command": "julia_unicode_reverse_lookup"
-  },
-  {
+    },
+    {
     "caption": "Julia-Unicode: Toggle",
     "command": "toggle_julia_unicode"
-  }
+    }
 ]

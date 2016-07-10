@@ -101,44 +101,66 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
                 view.replace(edit, sublime.Region(pt-3, pt-1), "")
 
 
+class JuliaUnicodeLookup(sublime_plugin.TextCommand):
+    def run(self, edit):
+
+        def copycallback(action):
+            if action >= 0:
+                sublime.set_clipboard(symbols[action][1])
+
+        display = [["%s: %s" % (s[1], s[0]), "Copy to Clipboard"] for s in symbols]
+
+        self.view.window().show_quick_panel(display, copycallback)
+
+
 class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         sel = view.sel()[0]
         if sel.empty():
             pt = sel.end()
-            chars = view.substr(sublime.Region(pt, pt+1))
-            if not chars or is_ascii(chars):
-                chars = view.substr(sublime.Region(pt-1, pt))
-                if not chars or is_ascii(chars):
-                    chars = ""
+            chars = []
+            char = view.substr(sublime.Region(pt, pt+1))
+            if char and not is_ascii(char):
+                chars.append(char)
+            else:
+                char = view.substr(sublime.Region(pt-1, pt))
+                if char and not is_ascii(char):
+                    chars.append(char)
         else:
-            chars = view.substr(sel)
+            chars = []
+            for c in view.substr(sel):
+                if not is_ascii(c) and c not in chars:
+                    chars.append(c)
 
-        self.show_list(chars)
+        if len(chars) > 0:
+            self.show_list(chars)
+        else:
+            view.window().show_input_panel("Unicode:", "", self.show_list, None, None)
 
-    def get_strings(self, chars):
+    def get_strings(self, c):
         ret = []
         for s in symbols:
-            if chars == s[1]:
+            if c == s[1]:
                 ret.append(s[0])
         return ret
 
     def show_list(self, chars):
         results = []
         for char in chars:
-            if not is_ascii(char):
-                strs = self.get_strings(char)
-                if len(strs) > 0:
-                    results = results + [(char, s) for s in strs]
+            strs = self.get_strings(char)
+            if len(strs) > 0:
+                results = results + [(char, s) for s in strs]
 
         def copycallback(action):
             if action >= 0:
                 sublime.set_clipboard(results[action][1])
 
-        display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
-
-        self.view.window().show_quick_panel(display, copycallback)
+        if results:
+            display = [["%s: %s" % r, "Copy to Clipboard"] for r in results]
+            self.view.window().show_quick_panel(display, copycallback)
+        else:
+            sublime.message_dialog("No matching is found.")
 
 
 class ToggleJuliaUnicode(sublime_plugin.WindowCommand):
