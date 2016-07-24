@@ -1,10 +1,10 @@
-### Julia-Unicode
+### Julia Unicode
 
 Julia REPL has a very nice way to insert Unicode characters (both latex and emoji symbols). This package brings the same feature to Sublime Text.
 There exists similar packages, [Julia Completions](https://github.com/jakeconnor/JuliaCompletions) and [UnicodeMath](https://github.com/mvoidex/UnicodeMath). But they have their own issues and do not support Emojis 😞. 
 
-Julia-Unicode is activated automatically for Julia syntax. To enable it for
-other syntaxes, check the item `Julia-Unicode Enabled` in the Edit menu.
+Julia Unicode is activated automatically for Julia syntax. To enable it for
+other syntaxes, check the item `Julia Unicode Enabled` in the Edit menu.
 Alternatively, it can be toggled via Command Palette. If you want to enable it for a
 specific syntax, edit the specific syntax settings file and add `"julia_unicode" : true`. 
 

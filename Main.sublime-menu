@@ -4,7 +4,7 @@
         "children":
         [
             { "caption": "-", "id" : "julia_unicode"},
-            { "command": "toggle_setting", "args": {"setting": "julia_unicode"}, "caption": "Julia-Unicode Enabled", "checkbox": true }
+            { "command": "toggle_setting", "args": {"setting": "julia_unicode"}, "caption": "Julia Unicode Enabled", "checkbox": true }
          ]
 
     }
