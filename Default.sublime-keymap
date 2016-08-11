@@ -1,44 +1,44 @@
 [
 
     {
-        "keys": ["tab"], "command": "julia_unicode_insert_best_completion", "context":
+        "keys": ["tab"], "command": "unicode_completion_insert_best_completion", "context":
         [
+            { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "setting.tab_completion", "operator": "equal", "operand": true },
             { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "julia_unicode_can_run"},
-            { "key": "julia_unicode_can_complete"},
-            { "key": "julia_unicode_is_completed", "operand": false }
+            { "key": "unicode_completion_can_complete"},
+            { "key": "unicode_completion_is_completed", "operand": false }
         ]
     },
 
     {
         "keys": ["tab"], "command": "auto_complete", "context":
         [
+            { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "setting.tab_completion", "operator": "equal", "operand": true },
             { "key": "has_next_field", "operator": "equal", "operand": false },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false },
-            { "key": "julia_unicode_can_run"},
-            { "key": "julia_unicode_is_completed"}
+            { "key": "unicode_completion_is_completed"}
         ]
     },
 
     {
-        "keys": ["tab"], "command": "julia_unicode_commit_complete", "context":
+        "keys": ["tab"], "command": "unicode_completion_commit_complete", "context":
         [
+            { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "auto_complete_visible" },
-            { "key": "julia_unicode_can_run"},
             { "key": "setting.auto_complete_commit_on_tab" },
-            { "key": "julia_unicode_can_complete"}
+            { "key": "unicode_completion_can_complete"}
         ]
     },
 
     {
-        "keys": ["enter"], "command": "julia_unicode_commit_complete", "context":
+        "keys": ["enter"], "command": "unicode_completion_commit_complete", "context":
         [
+            { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "auto_complete_visible" },
             { "key": "setting.auto_complete_commit_on_tab", "operand": false },
-            { "key": "julia_unicode_can_run"},
-            { "key": "julia_unicode_can_complete"}
+            { "key": "unicode_completion_can_complete"}
         ]
     }
 ]

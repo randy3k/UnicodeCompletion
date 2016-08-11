@@ -20,7 +20,7 @@ def get_command(view):
         return None
 
 
-def julia_unicode_can_complete(view, exact=True):
+def unicode_completion_can_complete(view, exact=True):
     c = get_command(view)
     if not c:
         return False
@@ -34,22 +34,16 @@ def julia_unicode_can_complete(view, exact=True):
     return False
 
 
-def julia_unicode_can_run(view):
-    point = view.sel()[0].end() if view.sel() else 0
-    is_julia = view.match_selector(point, "source.julia")
-    return is_julia or view.settings().get("julia_unicode", False)
-
-
 def is_ascii(s):
     return all(ord(c) < 128 for c in s)
 
 
-class JuliaUnicodeListener(sublime_plugin.EventListener):
+class UnicodeCompletionListener(sublime_plugin.EventListener):
 
     def on_query_completions(self, view, prefix, locations):
         if view.settings().get('is_widget'):
             return
-        if not julia_unicode_can_run(view):
+        if not view.settings().get("unicode_completion", False):
             return None
 
         ploc = locations[0]-len(prefix)
@@ -66,22 +60,20 @@ class JuliaUnicodeListener(sublime_plugin.EventListener):
             return None
         if not prefix:
             return None
-        return [(s[0] + "\t" + s[1], prefix, s[1]) for s in symbols if prefix in s[0]]
+        return [(s[0] + "\t" + s[1], s[1]) for s in symbols if prefix in s[0]]
 
     def on_query_context(self, view, key, operator, operand, match_all):
         if view.settings().get('is_widget'):
             return
-        if key == 'julia_unicode_is_completed':
-            return julia_unicode_can_complete(view, True) == operand
-        elif key == 'julia_unicode_can_complete':
-            return julia_unicode_can_complete(view, False) == operand
-        elif key == 'julia_unicode_can_run':
-            return julia_unicode_can_run(view)
+        if key == 'unicode_completion_is_completed':
+            return unicode_completion_can_complete(view, True) == operand
+        elif key == 'unicode_completion_can_complete':
+            return unicode_completion_can_complete(view, False) == operand
 
         return None
 
 
-class JuliaUnicodeInsertBestCompletion(sublime_plugin.TextCommand):
+class UnicodeCompletionInsertBestCompletion(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("insert_best_completion",  {"default": "\t", "exact": False})
@@ -91,7 +83,7 @@ class JuliaUnicodeInsertBestCompletion(sublime_plugin.TextCommand):
                 view.replace(edit, sublime.Region(pt-3, pt-1), "")
 
 
-class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
+class UnicodeCompletionCommitComplete(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("commit_completion")
@@ -101,7 +93,7 @@ class JuliaUnicodeCommitComplete(sublime_plugin.TextCommand):
                 view.replace(edit, sublime.Region(pt-3, pt-1), "")
 
 
-class JuliaUnicodeLookup(sublime_plugin.TextCommand):
+class UnicodeCompletionLookup(sublime_plugin.TextCommand):
     def run(self, edit):
 
         def copycallback(action):
@@ -114,7 +106,7 @@ class JuliaUnicodeLookup(sublime_plugin.TextCommand):
         self.view.window().show_quick_panel(latex_dplay + emoji_dplay, copycallback)
 
 
-class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
+class UnicodeCompletionReverseLookup(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         sel = view.sel()[0]
@@ -164,9 +156,11 @@ class JuliaUnicodeReverseLookup(sublime_plugin.TextCommand):
             sublime.message_dialog("No matching is found.")
 
 
-class ToggleJuliaUnicode(sublime_plugin.WindowCommand):
+class ToggleUnicodeCompletion(sublime_plugin.WindowCommand):
     def run(self):
         view = self.window.active_view()
-        view.settings().set("julia_unicode", not view.settings().get("julia_unicode", False))
-        onoff = "on" if view.settings().get("julia_unicode") else "off"
-        sublime.status_message("Julia-Unicode %s" % onoff)
+        view.settings().set(
+            "unicode_completion",
+            not view.settings().get("unicode_completion", False))
+        onoff = "on" if view.settings().get("unicode_completion") else "off"
+        sublime.status_message("UnicodeCompletion %s" % onoff)

@@ -3,8 +3,8 @@
         "id": "edit",
         "children":
         [
-            { "caption": "-", "id" : "julia_unicode"},
-            { "command": "toggle_setting", "args": {"setting": "julia_unicode"}, "caption": "Julia Unicode Enabled", "checkbox": true }
+            { "caption": "-", "id" : "unicode_completion"},
+            { "command": "toggle_setting", "args": {"setting": "unicode_completion"}, "caption": "Unicode Completion Enabled", "checkbox": true }
          ]
 
     }

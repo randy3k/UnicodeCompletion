@@ -1,14 +1,14 @@
 [
     {
-      "caption": "Julia Unicode: Unicode Lookup", 
-      "command": "julia_unicode_lookup"
+      "caption": "Unicode Completion: Unicode Lookup", 
+      "command": "unicode_completion_lookup"
     },
     {
-    "caption": "Julia Unicode: Unicode Reverse Lookup", 
-    "command": "julia_unicode_reverse_lookup"
+    "caption": "Unicode Completion: Unicode Reverse Lookup", 
+    "command": "unicode_completion_reverse_lookup"
     },
     {
-    "caption": "Julia Unicode: Toggle",
-    "command": "toggle_julia_unicode"
+    "caption": "Unicode Completion: Toggle",
+    "command": "toggle_unicode_completion"
     }
 ]
