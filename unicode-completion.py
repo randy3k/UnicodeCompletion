@@ -20,11 +20,11 @@ def get_command(view):
         return None
 
 
-def unicode_completion_can_complete(view, exact=True):
+def unicode_completion_has_prefix(view, match=False):
     c = get_command(view)
     if not c:
         return False
-    if not exact:
+    if not match:
         return True
 
     for s in symbols:
@@ -66,9 +66,9 @@ class UnicodeCompletionListener(sublime_plugin.EventListener):
         if view.settings().get('is_widget'):
             return
         if key == 'unicode_completion_is_completed':
-            return unicode_completion_can_complete(view, True) == operand
-        elif key == 'unicode_completion_can_complete':
-            return unicode_completion_can_complete(view, False) == operand
+            return unicode_completion_has_prefix(view, True) == operand
+        elif key == 'unicode_completion_has_prefix':
+            return unicode_completion_has_prefix(view, False) == operand
 
         return None
 

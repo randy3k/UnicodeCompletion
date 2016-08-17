@@ -10,7 +10,7 @@ Edit menu. Alternatively, it can be toggled via Command Palette. If you want
 to enable it for a specific syntax, edit the specific syntax settings file and
 add `"unicode_completion" : true`. 
 
-UnicodeCompletion is [ported](https://github.com/JuliaEditorSupport/Julia-sublime/pull/20)
+UnicodeCompletion's tab completion feature is [ported](https://github.com/JuliaEditorSupport/Julia-sublime/pull/20)
 to [Julia](https://github.com/JuliaEditorSupport/Julia-sublime), so Julia users
 should be able to use it without installing UnicodeCompletion.
 
