@@ -9,7 +9,7 @@ CONTAINS_COMPLETIONS = re.compile(r".*(\\[:_0-9a-zA-Z+-^]*)$")
 symbols = latex_symbols + emoji_symbols
 
 
-def get_command(view):
+def get_prefix(view):
     sel = view.sel()[0]
     pt = sel.end()
     line = view.substr(sublime.Region(view.line(pt).begin(), pt))
@@ -18,20 +18,6 @@ def get_command(view):
         return m.group(1)
     else:
         return None
-
-
-def unicode_completion_has_prefix(view, match=False):
-    c = get_command(view)
-    if not c:
-        return False
-    if not match:
-        return True
-
-    count = 0
-    for s in symbols:
-        if s[0].startswith(c):
-            count = count + 1
-    return count == 1
 
 
 def is_ascii(s):
@@ -46,7 +32,7 @@ class UnicodeCompletionListener(sublime_plugin.EventListener):
         if not view.settings().get("unicode_completion", False):
             return None
 
-        prefix = get_command(view)
+        prefix = get_prefix(view)
         if not prefix:
             return None
         ret = [(s[0] + "\t" + s[1], s[1]) for s in symbols if s[0].startswith(prefix)]
@@ -55,10 +41,19 @@ class UnicodeCompletionListener(sublime_plugin.EventListener):
     def on_query_context(self, view, key, operator, operand, match_all):
         if view.settings().get('is_widget'):
             return
-        if key == 'unicode_completion_is_completed':
-            return unicode_completion_has_prefix(view, True) == operand
+        if not view.settings().get("unicode_completion", False):
+            return
+
+        if key == 'unicode_completion_only_match':
+            prefix = get_prefix(view)
+            count = 0
+            for s in symbols:
+                if s[0].startswith(prefix):
+                    count = count + 1
+            return (count == 1) == operand
         elif key == 'unicode_completion_has_prefix':
-            return unicode_completion_has_prefix(view, False) == operand
+            prefix = get_prefix(view)
+            return (prefix is not None) == operand
 
         return None
 
