@@ -27,11 +27,11 @@ def unicode_completion_has_prefix(view, match=False):
     if not match:
         return True
 
+    count = 0
     for s in symbols:
-        if c == s[0]:
-            return True
-
-    return False
+        if s[0].startswith(c):
+            count = count + 1
+    return count == 1
 
 
 def is_ascii(s):
@@ -46,21 +46,11 @@ class UnicodeCompletionListener(sublime_plugin.EventListener):
         if not view.settings().get("unicode_completion", False):
             return None
 
-        ploc = locations[0]-len(prefix)
-        if view.substr(sublime.Region(ploc-1, ploc)) == "\\":
-            prefix = view.substr(sublime.Region(ploc-1, locations[0]))
-        elif view.substr(sublime.Region(ploc-2, ploc)) == "\\^":
-            prefix = view.substr(sublime.Region(ploc-1, locations[0]))
-        elif view.substr(sublime.Region(ploc-2, ploc)) == "\\:":
-            prefix = view.substr(sublime.Region(ploc-2, locations[0]))
-        elif view.substr(sublime.Region(ploc-1, ploc)) == ":":
-            pt = view.word(ploc-2).begin()
-            prefix = view.substr(sublime.Region(pt-2, locations[0]))
-        else:
-            return None
+        prefix = get_command(view)
         if not prefix:
             return None
-        return [(s[0] + "\t" + s[1], s[1]) for s in symbols if prefix in s[0]]
+        ret = [(s[0] + "\t" + s[1], s[1]) for s in symbols if s[0].startswith(prefix)]
+        return ret
 
     def on_query_context(self, view, key, operator, operand, match_all):
         if view.settings().get('is_widget'):
@@ -77,6 +67,16 @@ class UnicodeCompletionInsertBestCompletion(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("insert_best_completion",  {"default": "\t", "exact": False})
+        for sel in view.sel():
+            pt = sel.begin()
+            if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
+                view.replace(edit, sublime.Region(pt-3, pt-1), "")
+
+
+class UnicodeCompletionAutoComplete(sublime_plugin.TextCommand):
+    def run(self, edit):
+        view = self.view
+        view.run_command("auto_complete")
         for sel in view.sel():
             pt = sel.begin()
             if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
