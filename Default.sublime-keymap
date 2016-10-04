@@ -10,6 +10,15 @@
         ]
     },
 
+    {   "keys": ["tab"], "command": "unicode_completion_insert_best_completion",
+        "args": { "next_completion": true },
+        "context":
+        [
+            { "key": "last_command", "operator": "equal", "operand": "unicode_completion_insert_best_completion" },
+            { "key": "setting.tab_completion", "operator": "equal", "operand": true }
+        ]
+    },
+
     {
         "keys": ["tab"], "command": "unicode_completion_auto_complete", "context":
         [
