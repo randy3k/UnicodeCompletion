@@ -16,6 +16,7 @@
             { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "setting.tab_completion", "operator": "equal", "operand": true },
             { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "auto_complete_visible", "operator": "equal", "operand": false},
             { "key": "unicode_completion_has_prefix"},
             { "key": "unicode_completion_only_match"}
         ]
