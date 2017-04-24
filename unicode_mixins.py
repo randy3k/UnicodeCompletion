@@ -3,7 +3,7 @@ import sublime
 
 
 RE_COMMAND = re.compile(r"(\\[\^_0-9\-=]+|\\[a-zA-Z]+|\\:[_a-zA-Z0-9+-]+:)")
-RE_COMMAND_PREFIX = re.compile(r".*(\\[\^_0-9\-=]+|\\[a-zA-Z]+|\\:[_a-zA-Z0-9+-]+:)$")
+RE_COMMAND_PREFIX = re.compile(r".*(\\[\^_0-9\-=]+|\\[a-zA-Z]+|\\:[_a-zA-Z0-9+-]+:*)$")
 
 
 def is_ascii(s):
