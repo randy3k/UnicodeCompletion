@@ -6,7 +6,7 @@
             { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "setting.tab_completion", "operator": "equal", "operand": true },
             { "key": "has_next_field", "operator": "equal", "operand": false },
-            { "key": "unicode_completion_has_prefix"}
+            { "key": "unicode_completion_has_matches"}
         ]
     },
 
@@ -26,8 +26,8 @@
             { "key": "setting.tab_completion", "operator": "equal", "operand": true },
             { "key": "has_next_field", "operator": "equal", "operand": false },
             { "key": "auto_complete_visible", "operator": "equal", "operand": false},
-            { "key": "unicode_completion_has_prefix"},
-            { "key": "unicode_completion_only_match"}
+            { "key": "unicode_completion_has_matches"},
+            { "key": "unicode_completion_only_one_match"}
         ]
     },
 
@@ -37,7 +37,7 @@
             { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "auto_complete_visible" },
             { "key": "setting.auto_complete_commit_on_tab" },
-            { "key": "unicode_completion_has_prefix"}
+            { "key": "unicode_completion_has_matches"}
         ]
     },
 
@@ -47,7 +47,7 @@
             { "key": "setting.unicode_completion", "operator": "equal", "operand": true },
             { "key": "auto_complete_visible" },
             { "key": "setting.auto_complete_commit_on_tab", "operand": false },
-            { "key": "unicode_completion_has_prefix"}
+            { "key": "unicode_completion_has_matches"}
         ]
     }
 ]

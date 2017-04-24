@@ -23,17 +23,21 @@ Check [Julia Docs](http://docs.julialang.org/en/latest/manual/unicode-input/) fo
 
 Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Sublime Text. Similar to other latex symbols.
 
-<img width="400px", src="latex.png"/>
+<img width="400px" src="latex.png"/>
 
 ### Insert Emoji 🍺:
 
 Type `\:beer:` and hit enter/tab to insert the corresponding unicode 🍺 to Sublime Text. 
 It is known that Sublime Text autocompletion pop up window does not show 👍 (`\:+1:`) and superscriptions (e.g., `\^2`) correctly, to insert them, they have to be exactly typed and followed by a <kbd>tab</kbd>.
 
-<img width="400px", src="beers.png"/>
+<img width="400px" src="beers.png"/>
 
 ### Lookup and Reverse lookup
 
-It also provides commands `Unicode Lookup` and `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the unicodes or the corresponding input of the unicodes under the cursor or the selection. If no unicode is detected, a input prompt will be shown to ask for a unicode.
+It also provides commands `Unicode Lookup` and `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the unicodes or the corresponding input of the unicodes under the cursor or the selection. If no unicode is detected, a full list of unicodes will be shown.
 
-<img width="600px", src="reverse.png"/>
+<img width="600px" src="reverse.png"/>
+
+### Unicode conversion
+
+There are two conversion commands `Convert Selection to Unicodes` and `Convert Selection from Unicodes` which replace the unicode correspondences or vice versa.

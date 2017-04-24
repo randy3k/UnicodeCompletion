@@ -1,11 +1,19 @@
 [
     {
-      "caption": "Unicode Completion: Unicode Lookup", 
+      "caption": "Unicode Completion: Unicode Lookup",
       "command": "unicode_completion_lookup"
     },
     {
-    "caption": "Unicode Completion: Unicode Reverse Lookup", 
+    "caption": "Unicode Completion: Unicode Reverse Lookup",
     "command": "unicode_completion_reverse_lookup"
+    },
+    {
+    "caption": "Unicode Completion: Convert Selection to Unicodes",
+    "command": "unicode_completion_convert_to_unicodes"
+    },
+    {
+    "caption": "Unicode Completion: Convert Selection from Unicodes",
+    "command": "unicode_completion_convert_from_unicodes"
     },
     {
     "caption": "Unicode Completion: Toggle",

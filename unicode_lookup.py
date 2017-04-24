@@ -1,80 +1,29 @@
 import sublime
 import sublime_plugin
-import re
 
-from .unicode_completion import latex_symbols, emoji_symbols
-
-
-RE_COMMAND = re.compile(r"(\\[a-zA-Z]*|\\:[_0-9a-zA-Z+-^]*:)")
-RE_COMMAND_PREFIX = re.compile(r".*(\\[a-zA-Z]*|\\:[_0-9a-zA-Z+-^]*:)$")
+from .unicode_mixins import UnicodeCompletionMixins
+from .latex_symbols import latex_symbols
+from .emoji_symbols import emoji_symbols
 
 
-def is_ascii(s):
-    return all(ord(c) < 128 for c in s)
+def unique(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 
-class UnicodeCompletionLookup(sublime_plugin.TextCommand):
+class UnicodeCompletionLookup(UnicodeCompletionMixins, sublime_plugin.TextCommand):
     def run(self, edit):
-        cmds = [c for c in self.find_command_under_cursor()]
-        cmds = list(set(cmds))
-        self.show_list(cmds)
-
-    def char_at(self, pt):
-        return self.view.substr(sublime.Region(pt, pt+1))
-
-    def look_forward(self, pt):
-        view = self.view
-        col = view.rowcol(pt)[1]
-        line_content = view.substr(view.line(pt))
-        m = RE_COMMAND.match(line_content[col:])
-        if m:
-            return m.group(1)
-
-    def look_backward(self, pt):
-        view = self.view
-        line_content = view.substr(view.line(pt))
-        col = view.rowcol(pt)[1]
-        m = RE_COMMAND_PREFIX.match(line_content[:col])
-        if m:
-            return m.group(1)
-
-    def look_arround(self, pt):
-        view = self.view
-        line_content = view.substr(view.line(pt))
-        row, col = view.rowcol(pt)
-        backslash_loc = line_content[:col].find("\\")
-        if backslash_loc >= 0:
-            return self.look_forward(view.text_point(row, backslash_loc))
-
-    def find_command_under_cursor(self):
-        view = self.view
-        for s in view.sel():
-            if s.empty():
-                pt = s.end()
-                if self.char_at(pt).isalpha():
-                    ret = self.look_arround(pt)
-                else:
-                    ret = self.look_backward(pt)
-                if ret:
-                    yield ret
-                ret = self.look_forward(pt)
-                if ret:
-                    yield ret
-            else:
-                for x in RE_COMMAND.findall(view.substr(s)):
-                    yield x
-
-    def show_list(self, cmds):
+        cmds = unique(self.iterate_commands_under_cursors(self.view))
         if cmds:
-            _latex_symbols = [s for s in latex_symbols if s[0] in cmds]
-            _emoji_symbols = [s for s in emoji_symbols if s[0] in cmds]
+            _latex_symbols = [s for c in cmds for s in latex_symbols if c == s[0]]
+            _emoji_symbols = [s for c in cmds for s in emoji_symbols if c == s[0]]
         else:
             _latex_symbols = latex_symbols
             _emoji_symbols = emoji_symbols
 
         symbols = _latex_symbols + _emoji_symbols
-
-        if len(symbols) == 0:
+        if len(symbols) == 0 or not cmds:
             sublime.status_message("No unicode matches were found.")
 
         def copycallback(action):
@@ -87,55 +36,20 @@ class UnicodeCompletionLookup(sublime_plugin.TextCommand):
         self.view.window().show_quick_panel(l, copycallback)
 
 
-class UnicodeCompletionReverseLookup(sublime_plugin.TextCommand):
+class UnicodeCompletionReverseLookup(UnicodeCompletionMixins, sublime_plugin.TextCommand):
     def run(self, edit):
-        unicodes = [c for c in self.find_unicode_under_cursor()]
-        unicodes = list(set(unicodes))
-        self.show_list(unicodes)
-
-    def char_at(self, pt):
-        return self.view.substr(sublime.Region(pt, pt+1))
-
-    def look_forward(self, pt):
-        char = self.char_at(pt)
-        if not is_ascii(char):
-            return char
-
-    def look_backward(self, pt):
-        if pt == 0:
-            return
-        char = self.char_at(pt - 1)
-        if not is_ascii(char):
-            return char
-
-    def find_unicode_under_cursor(self):
-        view = self.view
-        for s in view.sel():
-            if s.empty():
-                pt = s.end()
-                ret = self.look_backward(pt)
-                if ret:
-                    yield ret
-                ret = self.look_forward(pt)
-                if ret:
-                    yield ret
-            else:
-                for x in view.substr(s):
-                    if not is_ascii(x):
-                        yield x
-
-    def show_list(self, unicodes):
+        unicodes = unique(self.iterate_unicodes_under_cursors(self.view))
 
         if unicodes:
-            _latex_symbols = [s for s in latex_symbols if s[1] in unicodes]
-            _emoji_symbols = [s for s in emoji_symbols if s[1] in unicodes]
+            _latex_symbols = [s for u in unicodes for s in latex_symbols if u == s[1]]
+            _emoji_symbols = [s for u in unicodes for s in emoji_symbols if u == s[1]]
         else:
             _latex_symbols = latex_symbols
             _emoji_symbols = emoji_symbols
 
         symbols = _latex_symbols + _emoji_symbols
 
-        if len(symbols) == 0:
+        if len(symbols) == 0 or not unicodes:
             sublime.status_message("No matches were found.")
 
         def copycallback(action):
