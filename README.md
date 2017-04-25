@@ -17,14 +17,14 @@ The list of unicodes is generated from
 
 Type `\alpha` and hit enter/tab to insert the corresponding unicode `α` to Sublime Text. Similar procedure applies to other latex symbols.
 
-<img width="400px" src="latex.png"/>
+<img width="400px" src="https://cloud.githubusercontent.com/assets/1690993/25364118/e4468f9c-292d-11e7-8f32-3e55cb75edeb.png"/>
 
 ### 🍺 Insert an emoji:
 
 Type `\:beer:` and hit enter/tab to insert the corresponding unicode 🍺 to Sublime Text. 
 It is known that Sublime Text autocompletion pop up window does not show 👍 (`\:+1:`) and superscriptions (e.g., `\^2`) correctly, to insert them, they have to be typed and followed by a <kbd>tab</kbd>.
 
-<img width="400px" src="beers.png"/>
+<img width="400px" src="https://cloud.githubusercontent.com/assets/1690993/25364117/e432b828-292d-11e7-914a-9c0f32d7489f.png"/>
 
 ### Unicode conversion
 
@@ -34,4 +34,4 @@ There are two conversion commands `Convert Selection to Unicodes` and `Convert S
 
 It also provides commands `Unicode Lookup` and `Unicode Reverse Lookup` (can be found in Command Palette) to lookup the unicodes or the corresponding input of the unicodes under the cursor or the selection. If no unicode is detected, a full list of unicodes will be shown.
 
-<img width="600px" src="reverse.png"/>
+<img width="600px" src="https://cloud.githubusercontent.com/assets/1690993/25364120/e63afac2-292d-11e7-90b8-81a0c75477ae.png"/>
