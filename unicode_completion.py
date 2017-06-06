@@ -10,10 +10,17 @@ symbols = latex_symbols + emoji_symbols
 
 class UnicodeCompletionListener(UnicodeCompletionMixins, sublime_plugin.EventListener):
 
+    def should_complete(self, view):
+        if view.settings().get("unicode_completion", False):
+            return True
+        elif view.settings().get('is_widget') and \
+                sublime.active_window().active_view().settings().get("unicode_completion", False):
+            return True
+        else:
+            return False
+
     def on_query_completions(self, view, prefix, locations):
-        if view.settings().get('is_widget'):
-            return
-        if not view.settings().get("unicode_completion", False):
+        if not self.should_complete(view):
             return None
 
         prefix = self.look_command_backward(view, locations[0])
@@ -23,10 +30,9 @@ class UnicodeCompletionListener(UnicodeCompletionMixins, sublime_plugin.EventLis
         return ret
 
     def on_query_context(self, view, key, operator, operand, match_all):
-        if view.settings().get('is_widget'):
-            return
-        if not view.settings().get("unicode_completion", False):
-            return
+        if not self.should_complete(view):
+            return None
+
         if len(view.sel()) == 0 or not view.sel()[0].empty():
             return
 
