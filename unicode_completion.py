@@ -14,7 +14,7 @@ class UnicodeCompletionListener(UnicodeCompletionMixin, sublime_plugin.EventList
         if view.settings().get("unicode_completion", False):
             return True
         elif view.settings().get('is_widget') and \
-                sublime.active_window().active_view().settings().get("unicode_completion", False):
+                view.window().active_view().settings().get("unicode_completion", False):
             return True
         else:
             return False
