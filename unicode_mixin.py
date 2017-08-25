@@ -11,7 +11,7 @@ def is_ascii(s):
     return all(ord(c) < 128 for c in s)
 
 
-class UnicodeCompletionMixins:
+class UnicodeCompletionMixin:
     def char_at(self, view, pt):
         return view.substr(sublime.Region(pt, pt+1))
 

@@ -1,14 +1,14 @@
 import sublime
 import sublime_plugin
 
-from .unicode_mixins import UnicodeCompletionMixins
+from .unicode_mixin import UnicodeCompletionMixin
 from .latex_symbols import latex_symbols
 from .emoji_symbols import emoji_symbols
 
 symbols = latex_symbols + emoji_symbols
 
 
-class UnicodeCompletionListener(UnicodeCompletionMixins, sublime_plugin.EventListener):
+class UnicodeCompletionListener(UnicodeCompletionMixin, sublime_plugin.EventListener):
 
     def should_complete(self, view):
         if view.settings().get("unicode_completion", False):
@@ -51,7 +51,7 @@ class UnicodeCompletionListener(UnicodeCompletionMixins, sublime_plugin.EventLis
         return None
 
 
-class UnicodeCompletionInsertBestCompletion(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionInsertBestCompletion(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit, next_completion=False):
         view = self.view
         if len(view.sel()) == 0 or not view.sel()[0].empty():
@@ -75,14 +75,14 @@ class UnicodeCompletionInsertBestCompletion(UnicodeCompletionMixins, sublime_plu
                         view.replace(edit, sublime.Region(pt-1, pt), self.completions[next_index])
 
 
-class UnicodeCompletionAutoComplete(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionAutoComplete(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("auto_complete")
         self.fix_completion(view, edit)
 
 
-class UnicodeCompletionCommitComplete(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionCommitComplete(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         view.run_command("commit_completion")

@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 
-from .unicode_mixins import UnicodeCompletionMixins
+from .unicode_mixin import UnicodeCompletionMixin
 from .latex_symbols import latex_symbols
 from .emoji_symbols import emoji_symbols
 
@@ -12,7 +12,7 @@ def unique(seq):
     return [x for x in seq if not (x in seen or seen_add(x))]
 
 
-class UnicodeCompletionLookup(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionLookup(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         cmds = unique(self.iterate_commands_under_cursors(self.view))
         if cmds:
@@ -36,7 +36,7 @@ class UnicodeCompletionLookup(UnicodeCompletionMixins, sublime_plugin.TextComman
         self.view.window().show_quick_panel(l, copycallback)
 
 
-class UnicodeCompletionReverseLookup(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionReverseLookup(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         unicodes = unique(self.iterate_unicodes_under_cursors(self.view))
 

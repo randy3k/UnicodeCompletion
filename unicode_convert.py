@@ -1,12 +1,12 @@
 import sublime
 import sublime_plugin
 
-from .unicode_mixins import UnicodeCompletionMixins
+from .unicode_mixin import UnicodeCompletionMixin
 from .latex_symbols import latex_symbols
 from .emoji_symbols import emoji_symbols
 
 
-class UnicodeCompletionConvertToUnicodes(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionConvertToUnicodes(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         for s in reversed(view.sel()):
@@ -38,7 +38,7 @@ def is_ascii(s):
     return all(ord(c) < 128 for c in s)
 
 
-class UnicodeCompletionConvertFromUnicodes(UnicodeCompletionMixins, sublime_plugin.TextCommand):
+class UnicodeCompletionConvertFromUnicodes(UnicodeCompletionMixin, sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         for s in reversed(view.sel()):
