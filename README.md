@@ -11,7 +11,7 @@ add `"unicode_completion" : true`.
 UnicodeCompletion's tab completion feature was [ported](https://github.com/JuliaEditorSupport/Julia-sublime/pull/20) to [Julia](https://github.com/JuliaEditorSupport/Julia-sublime), so Julia users should be able to use it without enabling UnicodeCompletion.
 
 The list of unicodes is generated from
-[Julia](https://github.com/JuliaLang/julia/), see [latex_symbols.jl](latex_symbols.jl) and [emoji_symbols.jl](emoji_symbols.jl). Check [Julia Docs](https://docs.julialang.org/en/latest/manual/unicode-input.html) for the complete list of supported Unicodes.
+[Julia](https://github.com/JuliaLang/julia/), see [latex_symbols.jl](latex_symbols.jl) and [emoji_symbols.jl](emoji_symbols.jl). Check [Julia Docs](https://docs.julialang.org/en/latest/manual/unicode-input/) for the complete list of supported Unicodes.
 
 ### δ Insert a LaTeX symbol:
 
