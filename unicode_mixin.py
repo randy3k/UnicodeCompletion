@@ -105,13 +105,3 @@ class UnicodeCompletionMixin:
                 for x in view.substr(s):
                     if not is_ascii(x):
                         yield x
-
-    def fix_completion(self, view, edit):
-        for sel in view.sel():
-            pt = sel.begin()
-            if view.substr(sublime.Region(pt-3, pt-1)) == "\\:":
-                view.replace(edit, sublime.Region(pt-3, pt-1), "")
-            elif view.substr(sublime.Region(pt-4, pt-1)) == "\\:+":
-                view.replace(edit, sublime.Region(pt-4, pt-1), "")
-            elif view.substr(sublime.Region(pt-4, pt-1)) == "\\:-":
-                view.replace(edit, sublime.Region(pt-4, pt-1), "")
