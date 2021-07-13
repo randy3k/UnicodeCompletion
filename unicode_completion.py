@@ -19,7 +19,7 @@ def normalize_completion(symbols):
             flags=sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS)
 
 
-class JuliaUnicodeListener(UnicodeCompletionMixin, sublime_plugin.EventListener):
+class UnicodeListener(UnicodeCompletionMixin, sublime_plugin.EventListener):
 
     def should_complete(self, view, pt):
         if view.settings().get("unicode_completion", False):
