@@ -1,0 +1,22 @@
+[
+    {
+        "keys": ["tab"], "command": "unicode_completion_insert_best_completion", "context":
+        [
+            { "key": "setting.is_widget"},
+            { "key": "setting.tab_completion", "operator": "equal", "operand": true },
+            { "key": "active_view_setting.unicode_completion", "operator": "equal", "operand": true },
+            { "key": "has_next_field", "operator": "equal", "operand": false },
+            { "key": "unicode_completion_has_matches"}
+        ]
+    },
+
+    {   "keys": ["tab"], "command": "unicode_completion_insert_best_completion",
+        "args": { "next_completion": true },
+        "context":
+        [
+            { "key": "setting.is_widget"},
+            { "key": "last_command", "operator": "equal", "operand": "unicode_completion_insert_best_completion" },
+            { "key": "setting.tab_completion", "operator": "equal", "operand": true }
+        ]
+    }
+]
