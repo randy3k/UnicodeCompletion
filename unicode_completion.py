@@ -61,10 +61,14 @@ class UnicodeCompletionInsertBestCompletion(UnicodeCompletionMixin, sublime_plug
 
         if not next_completion:
             prefix = self.look_command_backward(view, pt)
+            if not prefix:
+                return
             region = sublime.Region(view.sel()[0].begin()-len(prefix), view.sel()[0].begin())
             exact_match = [s[1] for s in symbols if s[0] == prefix]
             self.completions = exact_match + \
                     list(set([s[1] for s in symbols if s[0].startswith(prefix) and s[0] != prefix]))
+            if not self.completions:
+                return
             view.replace(edit, region, self.completions[0])
         else:
             region = sublime.Region(view.sel()[0].begin()-1, view.sel()[0].begin())
